@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation | വിവാഹ ക്ഷണപത്രം</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Noto+Sans+Malayalam:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Malayalam', 'Playfair Display', serif;
+            background: #faf6f0;
+            color: #4a3b32;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* പശ്ചാത്തലം */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(#d4af37 0.5px, transparent 0.5px), 
+                radial-gradient(#d4af37 0.5px, #faf6f0 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        /* ക്ഷണക്കത്ത് കാർഡ് */
+        .invitation-card {
+            background: #ffffff;
+            max-width: 600px;
+            width: 90%;
+            margin: 40px auto;
+            padding: 50px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(184, 134, 11, 0.15);
+            border: 2px solid #e6d5b8;
+            position: relative;
+        }
+
+        .border-frame {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px solid #d4af37;
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .header-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.2rem;
+            color: #b8860b;
+            margin-bottom: 10px;
+        }
+
+        .sub-title {
+            font-size: 1.1rem;
+            color: #7a6855;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .couple-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #8b0000;
+            margin: 20px 0;
+            line-height: 1.2;
+        }
+
+        .ampersand {
+            font-size: 2rem;
+            color: #d4af37;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .details {
+            margin: 30px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5a4a42;
+        }
+
+        .date-box {
+            background: #fdfaf5;
+            border-top: 1px solid #e6d5b8;
+            border-bottom: 1px solid #e6d5b8;
+            padding: 15px 0;
+            margin: 25px 0;
+            font-weight: 600;
+            color: #8b0000;
+            font-size: 1.2rem;
+        }
+
+        /* ഓഡിയോ കണ്ട്രോൾ ബട്ടൺ */
+        .audio-control {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #8b0000;
+            color: #ffffff;
+            border: 2px solid #d4af37;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-family: 'Noto Sans Malayalam', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: #a00000;
+            transform: scale(1.05);
+        }
+
+        .music-icon {
+            font-size: 1.2rem;
+            animation: spin 4s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .playing .music-icon {
+            animation-play-state: running;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ആരംഭ സ്ക്രീൻ (Tap to Open) */
+        .overlay-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 246, 240, 0.96);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .overlay-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .open-btn {
+            background: #8b0000;
+            color: #fff;
+            border: 2px solid #d4af37;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.3);
+            margin-top: 20px;
+            font-family: 'Noto Sans Malayalam', sans-serif;
+            transition: transform 0.2s;
+        }
+
+        .open-btn:hover {
+            transform: scale(1.08);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <!-- വെബ്‌സൈറ്റ് തുറക്കുമ്പോൾ ആദ്യം കാണിക്കുന്ന സ്ക്രീൻ -->
+    <div class="overlay-screen" id="overlay">
+        <h1 class="header-title">Wedding Invitation</h1>
+        <p style="font-size: 1.2rem; color: #666; margin-bottom: 10px;">വിവാഹ ക്ഷണപത്രത്തിലേക്ക് സ്വാഗതം</p>
+        <button class="open-btn" onclick="openInvitation()">💌 ക്ഷണം കാണുക (Open Invitation)</button>
+    </div>
+
+    <!-- പ്രധാന ക്ഷണക്കത്ത് -->
+    <div class="invitation-card">
+        <div class="border-frame"></div>
+        <p class="sub-title">Save The Date</p>
+        <h1 class="header-title">Are Invited to the Wedding of</h1>
+        
+        <div class="couple-names">
+            വരന്റെ പേര്
+            <span class="ampersand">&</span>
+            വധുവിന്റെ പേര്
+        </div>
+
+        <div class="date-box">
+            📅 ഞായറാഴ്ച, ഒക്ടോബർ 25, 2026<br>
+            ⏰ സമയം: രാവിലെ 10:30 AM
+        </div>
+
+        <div class="details">
+            <b>വേദി (Venue):</b><br>
+            ഗ്രാൻഡ് ഓഡിറ്റോറിയം, കോഴിക്കോട്<br><br>
+            ഞങ്ങളുടെ സന്തോഷനിമിഷങ്ങളിൽ പങ്കുചേരുവാൻ<br>നിങ്ങളെ ഏവരെയും സ്നേഹപൂർവ്വം ക്ഷണിക്കുന്നു.
+        </div>
+    </div>
+
+    <!-- മ്യൂസിക് പ്ലേ ചെയ്യുന്ന ടാഗ് (ഓഡിയോ ഉള്ളടക്കം ബാക്ക്ഗ്രൗണ്ടിൽ ലോഡ് ചെയ്തിട്ടുണ്ട്) -->
+    <audio id="weddingAudio" loop preload="auto">
+        <source src="audio-file.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- മ്യൂസിക് ഓൺ/ഓഫ് ബട്ടൺ -->
+    <button class="audio-control" id="audioBtn" onclick="toggleAudio()">
+        <span class="music-icon">🎵</span>
+        <span id="audioText">മ്യൂസിക് പ്ലേ ചെയ്യുക</span>
+    </button>
+
+    <script>
+        const audio = document.getElementById('weddingAudio');
+        const audioBtn = document.getElementById('audioBtn');
+        const audioText = document.getElementById('audioText');
+        const overlay = document.getElementById('overlay');
+
+        function openInvitation() {
+            overlay.classList.add('hidden');
+            audio.play().then(() => {
+                audioBtn.classList.add('playing');
+                audioText.innerText = "മ്യൂസിക് ഓഫ് ചെയ്യുക";
+            }).catch(error => {
+                console.log("Autoplay restriction:", error);
+            });
+        }
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                audioBtn.classList.add('playing');
+                audioText.innerText = "മ്യൂസിക് ഓഫ് ചെയ്യുക";
+            } else {
+                audio.pause();
+                audioBtn.classList.remove('playing');
+                audioText.innerText = "മ്യൂസിക് പ്ലേ ചെയ്യുക";
+            }
+        }
+    </script>
+</body>
+</html>

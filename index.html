@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anshid & Marwa Wedding Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #faf7f2;
+      color: #4a4a4a;
+      text-align: center;
+    }
+
+    .hero {
+      padding: 60px 20px;
+      background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                  url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .sub-title {
+      font-size: 1.4rem;
+      color: #8b6b4d;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      color: #8b6b4d;
+      margin: 15px 0;
+    }
+
+    .sub-title2 {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
+      border-radius: 8px;
+      border: 1px solid #f0e6dd;
+    }
+
+    .couple-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+    }
+
+    .person {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .person h3 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: #8b6b4d;
+    }
+
+    .role {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: #a18a74;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #8b6b4d;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #6d533b;
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #8b6b4d;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    /* Mobile Responsive Typography */
+    @media (max-width: 480px) {
+      h1 { font-size: 2.5rem; }
+      .person h3 { font-size: 1.8rem; }
+      .sub-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio Element -->
+  <audio id="bg-music" loop>
+    <source src="humsafar.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <button class="music-btn" aria-label="Toggle Background Music" onclick="toggleMusic()">🎵</button>
+
+  <div class="hero">
+    <div class="sub-title">Bismillahir Rahmanir Rahim</div>
+    <h1>Anshid & Marwa</h1>
+    <div class="sub-title2">Are Getting Married</div>
+  </div>
+
+  <div class="section">
+    <h2>Wedding Ceremony</h2>
+    <p><strong>Date:</strong> Saturday, 12th September 2026</p>
+    <p><strong>Time:</strong> 11:30 AM</p>
+    <p><strong>Venue:</strong> MEENA AUDITORIUM, Chaanjal, Mundakkode</p>
+    <a href="https://maps.google.com/?q=11.011819,76.088320" target="_blank" class="btn">📍 Open Google Maps</a>
+  </div>
+
+  <div class="section">
+    <div class="couple-grid">
+      <div class="person">
+        <p class="role">Groom</p>
+        <h3>Anshid</h3>
+        <p>Son of Mr. Abdullah & Mrs. Rashida</p>
+      </div>
+      <div class="person">
+        <p class="role">Bride</p>
+        <h3>Marwa</h3>
+        <p>Daughter of Mr. Ibrahim & Mrs. Suhara</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Countdown to the Big Day</h2>
+    <h3 id="timer" style="margin-top: 15px; color: #8b6b4d;">00d 00h 00m 00s</h3>
+  </div>
+
+  <script>
+    // Reliable cross-browser Date object (Year, Month Index 0-11, Day, Hour, Minute)
+    // September is month index 8 (0 = Jan, 8 = Sep)
+    const weddingDate = new Date(2026, 8, 12, 11, 30, 0).getTime();
+
+    const countdown = setInterval(() => {
+      const now = new Date().getTime();
+      const diff = weddingDate - now;
+
+      if (diff < 0) {
+        clearInterval(countdown);
+        document.getElementById("timer").innerText = "The Wedding Day is Here!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("timer").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+
+    // Audio toggle script
+    function toggleMusic() {
+      const music = document.getElementById("bg-music");
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+  </script>
+
+</body>
+</html>

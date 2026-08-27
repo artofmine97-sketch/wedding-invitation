@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anshid & Marwa - Wedding Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background: #faf8f5; color: #4a4a4a; text-align: center; }
+        
+        .hero { padding: 60px 20px; background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=80') center/cover; }
+        .bismillah { font-size: 1.4rem; color: #8b6b4d; margin-bottom: 10px; }
+        h1 { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: #8b6b4d; margin: 15px 0; }
+        .sub-title { font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        
+        .section { padding: 40px 20px; max-width: 800px; margin: 0 auto; }
+        .card { background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #f0e6dd; }
+        
+        .couple-grid { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; }
+        .person { flex: 1; min-width: 250px; }
+        .person h3 { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #8b6b4d; }
+        .role { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #a18a74; }
+        
+        #timer { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .time-box { background: #8b6b4d; color: #fff; padding: 10px 15px; border-radius: 8px; min-width: 65px; }
+        .time-box span { font-size: 1.5rem; font-weight: bold; display: block; }
+        .time-box p { font-size: 0.7rem; text-transform: uppercase; }
+        
+        .btn { display: inline-block; padding: 12px 25px; background: #8b6b4d; color: #fff; text-decoration: none; border-radius: 25px; margin-top: 15px; font-size: 0.9rem; transition: 0.3s; }
+        .btn:hover { background: #6d533b; }
+        
+        .music-btn { position: fixed; bottom: 20px; right: 20px; background: #8b6b4d; color: #fff; border: none; padding: 12px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+        <p>Together With Their Families</p>
+        <h1>Anshid & Marwa</h1>
+        <p class="sub-title">Save The Date</p>
+        <p><strong>Saturday · September 12, 2026</strong></p>
+    </section>
+
+    <!-- Couple Details Section -->
+    <section class="section">
+        <div class="card couple-grid">
+            <div class="person">
+                <p class="role">Groom</p>
+                <h3>Anshid</h3>
+                <p>Son of Mr. Abdullah & Mrs. Rashida</p>
+            </div>
+            <div style="align-self: center; font-size: 1.5rem; color: #8b6b4d;">&</div>
+            <div class="person">
+                <p class="role">Bride</p>
+                <h3>Marwa</h3>
+                <p>Daughter of Mr. Moidutty & Mrs. Reeshma</p>
+            </div>
+        </div>
+
+        <!-- Function Details Section -->
+        <div class="card">
+            <h2 style="color: #8b6b4d; margin-bottom: 15px;">Wedding Ceremony</h2>
+            <p><strong>Date:</strong> Saturday, 12th September 2026</p>
+            <p><strong>Time:</strong> 11:30 AM</p>
+            <p style="margin-top: 10px;"><strong>Venue:</strong></p>
+            <p>MEA AUDITORIUM, Chaanjal, Mundakkode</p>
+            <a href="https://maps.google.com/?q=11.011819,76.088982" target="_blank" class="btn">📍 Open Google Maps</a>
+        </div>
+
+        <!-- Countdown Section -->
+        <div class="card">
+            <h3 style="color: #8b6b4d;">Counting Down To The Big Day</h3>
+            <div id="timer">
+                <div class="time-box"><span id="days">00</span><p>Days</p></div>
+                <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
+                <div class="time-box"><span id="mins">00</span><p>Mins</p></div>
+                <div class="time-box"><span id="secs">00</span><p>Secs</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <!-- Humsafar Song MP3 Direct Link -->
+        <source src="humsafar.mp3" type="audio/mpeg">
+    </audio>
+    <button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+    <script>
+        // Countdown Timer
+        const weddingDate = new Date("Sep 12, 2026 11:30:00").getTime();
+        
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+
+            if (diff > 0) {
+                document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("secs").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }, 1000);
+
+        // Music Toggle
+        const music = document.getElementById("bg-music");
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+    </script>
+</body>
+</html>
